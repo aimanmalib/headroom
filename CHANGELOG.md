@@ -284,6 +284,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **code:** fix two `CodeAwareCompressor` AST-reassembly bugs: an exported JS/TS function or class (`export function foo() {`) produced a duplicated `export export` keyword and invalid syntax, because line-based node slicing (used to preserve indentation) pulled in the preceding `export` sibling's text on top of the `export_statement` handler's own prefix reconstruction. Separately, in every supported language, a doc comment immediately above a top-level function, class, or type was detached from its declaration during extraction and re-emitted in a cluster at the end of the compressed output instead of staying attached to what it documents.
 - * **proxy:** Buffered upstream responses containing a `server_tool_use` (or any other unrecognized Anthropic content block) no longer turn a fully-generated response into an HTTP 502. `StreamingMixin._response_to_sse` raised `ValueError` on unknown block types after the entire upstream generation had already been buffered, so a slow-but-successful response failed and the client retried the whole multi-minute request. Unknown blocks are now emitted verbatim in `content_block_start` (following the existing redacted_thinking` pattern), so `server_tool_use`, `server_tool_result`, `mcp_tool_use`, and future block types round-trip ([#1806](https://github.com/headroomlabs-ai/headroom/issues/1806)).
 
+## [0.44.1](https://github.com/headroomlabs-ai/headroom/compare/v0.44.0...v0.44.1) (2026-11-10)
+
+
+### Bug Fixes
+
+* **openclaw:** return structured retrieval tool results ([#4707](https://github.com/headroomlabs-ai/headroom/issues/4707)) ([e6b5777](https://github.com/headroomlabs-ai/headroom/commit/e6b5777806c53206ddea08ccede317e3e92971c6))
+* **proxy:** don't take Claude Code's "Tool loaded." note as the user query ([#4714](https://github.com/headroomlabs-ai/headroom/issues/4714)) ([dcd03b9](https://github.com/headroomlabs-ai/headroom/commit/dcd03b9b4c58340a5f4448fd4740045294e156f7))
+* **wrap:** match Serena's unset dashboard key instead of appending a duplicate ([#4315](https://github.com/headroomlabs-ai/headroom/issues/4315)) ([1da8930](https://github.com/headroomlabs-ai/headroom/commit/1da8930ab47a2fc5339ded97e5a41bfe6fc419eb))
+
 ## [0.44.0](https://github.com/headroomlabs-ai/headroom/compare/v0.43.1...v0.44.0) (2026-11-09)
 
 
